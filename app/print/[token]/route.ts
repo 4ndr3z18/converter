@@ -1,6 +1,6 @@
-import { buildDocument } from "@/lib/render/document";
+import { buildHtmlDocument } from "@/lib/render/html-template";
 import { readRenderJob } from "@/lib/store/render-store";
-import { resolveTemplate } from "@/lib/template/presets";
+import { getTemplate } from "@/lib/template/store";
 
 type RouteParams = { params: Promise<{ token: string }> };
 
@@ -18,12 +18,31 @@ export async function GET(_request: Request, context: RouteParams) {
     });
   }
 
-  const template = resolveTemplate(job.template);
-
   try {
-    const built = buildDocument({
+    const stored = job.templateSnapshot
+      ? {
+          id: job.template,
+          builtin: false,
+          meta: job.templateSnapshot.meta,
+          html: job.templateSnapshot.html,
+          css: job.templateSnapshot.css,
+          updatedAt: Date.now(),
+        }
+      : await getTemplate(job.template);
+
+    if (!stored) {
+      return new Response("La plantilla de este documento ya no existe.", {
+        status: 404,
+        headers: {
+          "content-type": "text/plain; charset=utf-8",
+          "cache-control": "no-store",
+        },
+      });
+    }
+
+    const built = buildHtmlDocument({
       markdown: job.markdown,
-      template,
+      template: stored,
       overrides: job.overrides,
     });
 

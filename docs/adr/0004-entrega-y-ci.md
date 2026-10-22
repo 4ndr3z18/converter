@@ -21,6 +21,7 @@ El proyecto se distribuye como una aplicación local. Aun así, necesita una ver
   7. `npm run pdf:sample -- --start`;
   8. publicación de `artifacts/demo-apa.pdf` como artefacto.
 - Los fixtures usan datos ficticios. No se versionan documentos reales, PDFs ni secretos.
+- La verificación del PDF comprueba contenido, exactamente 11 páginas y `MediaBox [0 0 612 792]` en todas las hojas.
 
 ## Consecuencias
 

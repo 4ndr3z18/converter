@@ -11,9 +11,10 @@ El producto necesita que la vista previa del navegador y el PDF descargado coinc
 
 Usar un único pipeline:
 
-1. `markdown-it` convierte el Markdown en HTML.
-2. `Paged.js` pagina ese HTML en el navegador respetando las reglas `@page`, los saltos de página y los encabezados/pies.
-3. Playwright abre la misma página paginada y la imprime con Chromium.
+1. `markdown-it` convierte el Markdown en HTML y separa las secciones.
+2. Handlebars inyecta ese HTML en `template.html` y aplica `template.css`.
+3. `Paged.js` pagina el resultado en el navegador respetando las reglas `@page`, los saltos de página y la numeración.
+4. Playwright abre la misma página paginada y la imprime con Chromium.
 
 La vista previa y el PDF consumen exactamente el mismo HTML y el mismo CSS.
 
@@ -33,7 +34,8 @@ La vista previa y el PDF consumen exactamente el mismo HTML y el mismo CSS.
 
 ## Referencias
 
-- `lib/render/document.ts`
+- `lib/render/html-template.ts`
 - `lib/render/markdown.ts`
 - `lib/pdf/chromium.ts`
 - `app/print/[token]/route.ts`
+- `templates/apa7/`

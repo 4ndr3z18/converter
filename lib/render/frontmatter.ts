@@ -1,5 +1,4 @@
 import { load as loadYaml } from "js-yaml";
-import type { TemplateDefinition } from "@/lib/template/schema";
 import { asText, sanitizeFilename } from "@/lib/utils/text";
 
 export type DocumentData = Record<string, unknown>;
@@ -90,6 +89,12 @@ export function setValue(target: DocumentData, path: string, value: unknown): vo
   });
 }
 
+const UNSAFE_KEYS = new Set(["__proto__", "constructor", "prototype"]);
+
+function isSafePath(path: string): boolean {
+  return path.split(".").every((key) => !UNSAFE_KEYS.has(key));
+}
+
 export function applyOverrides(
   data: DocumentData,
   overrides?: Record<string, unknown>,
@@ -98,7 +103,7 @@ export function applyOverrides(
 
   const result: DocumentData = structuredClone(data);
   for (const [key, value] of Object.entries(overrides)) {
-    if (value === undefined) continue;
+    if (value === undefined || !isSafePath(key)) continue;
     if (key.includes(".")) {
       setValue(result, key, value);
     } else {
@@ -108,11 +113,17 @@ export function applyOverrides(
   return result;
 }
 
-export function validateRequiredFields(
-  template: TemplateDefinition,
+export type TemplateField = {
+  key: string;
+  label: string;
+  required: boolean;
+};
+
+export function validateTemplateFields(
+  fields: TemplateField[],
   data: DocumentData,
 ): RenderIssue[] {
-  return template.document.fields
+  return fields
     .filter((field) => field.required)
     .filter((field) => asText(getValue(data, field.key)) === "")
     .map((field) => ({
@@ -133,13 +144,11 @@ export function resolvePattern(
   );
 }
 
-export function buildFilename(
-  template: TemplateDefinition,
+export function buildFilenameFromPattern(
+  pattern: string,
   data: DocumentData,
 ): string {
-  const raw = resolvePattern(template.document.filenamePattern, (key) =>
-    asText(getValue(data, key)),
-  )
+  const raw = resolvePattern(pattern, (key) => asText(getValue(data, key)))
     .replace(/\s*[-–—]\s*(?=$|\s*[-–—])/g, " ")
     .replace(/\s{2,}/g, " ")
     .trim();

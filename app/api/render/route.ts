@@ -1,4 +1,5 @@
 import { formatValidationError, prepareRender, renderRequestSchema } from "@/lib/api/render-request";
+import { TemplateStoreError } from "@/lib/template/store";
 
 export async function POST(request: Request) {
   let payload: unknown;
@@ -25,13 +26,21 @@ export async function POST(request: Request) {
       warnings: prepared.warnings,
       filename: prepared.filename,
       title: prepared.title,
+      author: prepared.author,
+      data: prepared.data,
       template: prepared.templateSlug,
+      templateName: prepared.templateName,
     });
   } catch (error) {
     console.error("[api/render]", error);
     return Response.json(
-      { error: "No se pudo preparar el documento." },
-      { status: 500 },
+      {
+        error:
+          error instanceof TemplateStoreError
+            ? error.message
+            : "No se pudo preparar el documento.",
+      },
+      { status: error instanceof TemplateStoreError ? 400 : 500 },
     );
   }
 }

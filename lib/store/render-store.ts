@@ -1,15 +1,23 @@
 import { randomBytes } from "node:crypto";
 import { mkdir, readFile, readdir, stat, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+import type { TemplateMeta } from "@/lib/template/model";
 
 const RENDER_DIR = path.join(process.cwd(), ".data", "render");
 const TOKEN_RE = /^[a-f0-9]{32}$/;
 const TTL_MS = 2 * 60 * 60 * 1000;
 
+export type TemplateSnapshot = {
+  meta: TemplateMeta;
+  html: string;
+  css: string;
+};
+
 export type RenderJob = {
   token: string;
   markdown: string;
   template: string;
+  templateSnapshot?: TemplateSnapshot;
   overrides?: Record<string, unknown>;
   filename: string;
   createdAt: number;
@@ -18,6 +26,7 @@ export type RenderJob = {
 export type CreateRenderJobInput = {
   markdown: string;
   template: string;
+  templateSnapshot?: TemplateSnapshot;
   overrides?: Record<string, unknown>;
   filename: string;
 };
@@ -52,6 +61,14 @@ export async function readRenderJob(token: string): Promise<RenderJob | null> {
     const raw = await readFile(path.join(RENDER_DIR, `${token}.json`), "utf8");
     const job = JSON.parse(raw) as RenderJob;
     if (typeof job.markdown !== "string" || typeof job.template !== "string") {
+      return null;
+    }
+    if (
+      job.templateSnapshot &&
+      (typeof job.templateSnapshot.html !== "string" ||
+        typeof job.templateSnapshot.css !== "string" ||
+        typeof job.templateSnapshot.meta !== "object")
+    ) {
       return null;
     }
     if (Date.now() - job.createdAt > TTL_MS) return null;

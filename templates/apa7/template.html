@@ -1,0 +1,43 @@
+<div class="doc tables-apa">
+<header class="cover">
+  <div class="cover-top">
+    {{#if affiliation.logo}}
+    <img class="cover-logo" src="{{affiliation.logo}}" alt="Logo institucional">
+    {{/if}}
+    <h1 class="cover-title">{{field "title" "título"}}</h1>
+    <div class="cover-meta">
+      <p>{{field "author.name" "autor"}}</p>
+      <p>Código: {{field "author.id" "código"}}</p>
+      <p>{{field "affiliation.university" "universidad"}}</p>
+      {{#if affiliation.faculty}}<p>{{affiliation.faculty}}</p>{{/if}}
+      <p>{{field "course.name" "asignatura"}}{{#if course.code}} ({{course.code}}){{/if}}</p>
+      <p>Docente: {{#if professor.title}}{{professor.title}} {{/if}}{{field "professor.name" "docente"}}</p>
+      {{#if section}}<p>Sección {{section}}{{#if cycle}} — Ciclo {{cycle}}{{/if}}</p>{{else}}{{#if cycle}}<p>Ciclo {{cycle}}</p>{{/if}}{{/if}}
+      {{#if date}}{{#if city}}<p>{{city}}, {{formatDate date}}</p>{{else}}<p>{{formatDate date}}</p>{{/if}}{{else}}{{#if city}}<p>{{city}}, {{field "date" "fecha"}}</p>{{else}}<p>{{field "date" "fecha"}}</p>{{/if}}{{/if}}
+    </div>
+  </div>
+</header>
+
+{{#if abstract}}
+<section class="abstract-page">
+  <h2 class="abstract-title">Resumen</h2>
+  {{abstract.html}}
+  {{#if abstract.keywords}}<p class="keywords"><em>{{abstract.keywordsLabel}}:</em> {{abstract.keywords}}</p>{{/if}}
+</section>
+{{/if}}
+
+{{#if title}}<h1 class="body-title">{{title}}</h1>{{/if}}
+{{{preamble}}}
+
+{{#each bodySections}}
+<section class="doc-section" data-section="{{slug}}">{{{html}}}</section>
+{{/each}}
+
+{{#each referenceSections}}
+<section class="doc-section references-section" data-section="{{slug}}">{{{html}}}</section>
+{{/each}}
+
+{{#each appendixSections}}
+<section class="doc-section appendix-section" data-section="{{slug}}">{{{html}}}</section>
+{{/each}}
+</div>

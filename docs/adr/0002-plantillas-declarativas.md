@@ -1,7 +1,9 @@
 # ADR 0002 — Plantillas declarativas y versionadas
 
-- **Estado:** aceptado
+- **Estado:** superado por el [ADR 0005](0005-plantillas-html-css.md)
 - **Fecha:** 2026-10-22
+
+> **Nota de reemplazo (2026-10-22):** esta decisión describía el esquema declarativo de la v0.1.0. La v0.2.0 reemplazó ese esquema por plantillas HTML/CSS editables con Handlebars. El ADR se conserva como registro histórico.
 
 ## Contexto
 

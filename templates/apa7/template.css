@@ -1,0 +1,417 @@
+
+/* ---------- Página ---------- */
+@page {
+  size: 215.9mm 279.4mm;
+  margin: 25.4mm 25.4mm 25.4mm 25.4mm;
+
+}
+
+
+
+/* ---------- Base ---------- */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #e6e9ee;
+}
+
+.doc {
+  font-family: "Times New Roman", Tinos, "Liberation Serif", serif;
+  font-size: 12pt;
+  line-height: 2;
+  color: #000000;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.doc p {
+  margin: 0pt 0 0pt 0;
+  text-indent: 12.7mm;
+  orphans: 2;
+  widows: 2;
+}
+
+.doc p:empty {
+  display: none;
+}
+
+.doc a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.doc hr {
+  border: 0;
+  border-top: 0.5pt solid #000000;
+  margin: 8pt 0;
+}
+
+.doc img {
+  max-width: 100%;
+  height: auto;
+}
+
+.doc .missing {
+  color: #5c5c5c;
+}
+
+/* ---------- Encabezados ---------- */
+.doc h2 { font-size: 12pt; font-weight: 700; font-style: normal; text-align: center; line-height: 2; margin: 0pt 0 0pt 0; text-indent: 0; color: #000000; break-after: avoid; page-break-after: avoid; }
+.doc h3 { font-size: 12pt; font-weight: 700; font-style: normal; text-align: left; line-height: 2; margin: 0pt 0 0pt 0; text-indent: 0; color: #000000; break-after: avoid; page-break-after: avoid; }
+.doc h4 { font-size: 12pt; font-weight: 700; font-style: italic; text-align: left; line-height: 2; margin: 0pt 0 0pt 0; text-indent: 0; color: #000000; break-after: avoid; page-break-after: avoid; }
+.doc h5 { font-size: 12pt; font-weight: 700; font-style: normal; text-align: left; line-height: 2; margin: 0pt 0 0pt 0; text-indent: 0; color: #000000; break-after: avoid; page-break-after: avoid; }
+.doc h5 { display: inline; }
+.doc h5::after { content: ". "; }
+.doc h5 + p { display: inline; text-indent: 0; }
+.doc h6 { font-size: 12pt; font-weight: 700; font-style: italic; text-align: left; line-height: 2; margin: 0pt 0 0pt 0; text-indent: 0; color: #000000; break-after: avoid; page-break-after: avoid; }
+.doc h6 { display: inline; }
+.doc h6::after { content: ". "; }
+.doc h6 + p { display: inline; text-indent: 0; }
+
+/* ---------- Portada ---------- */
+.cover {
+  break-after: page;
+  page-break-after: always;
+}
+
+.cover-top {
+  padding-top: 4mm;
+  text-align: center;
+}
+
+.cover-logo {
+  display: block;
+  margin: 0 auto 8mm auto;
+  max-width: 90mm;
+  max-height: 25mm;
+  width: auto;
+  height: auto;
+}
+
+.cover-title {
+  font-size: 12pt;
+  font-weight: 700;
+  line-height: 2;
+  text-align: center;
+  text-indent: 0;
+  margin: 0 0 8.5mm 0;
+  padding: 0;
+}
+
+.cover-report-type {
+  font-style: italic;
+  text-align: center;
+  text-indent: 0;
+  margin: 0 0 8.5mm 0;
+}
+
+.cover-meta p {
+  text-align: center;
+  text-indent: 0;
+  margin: 0;
+}
+
+/* ---------- Resumen ---------- */
+.abstract-page {
+  break-before: page;
+  page-break-before: always;
+  break-after: page;
+  page-break-after: always;
+}
+
+.abstract-title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+  text-indent: 0;
+  margin: 0;
+  line-height: 2;
+}
+
+.abstract-page p {
+  text-indent: 0;
+}
+
+.abstract-page .keywords {
+  margin-top: 0;
+  text-indent: 0;
+}
+
+.keywords em {
+  font-style: italic;
+}
+
+/* ---------- Índice ---------- */
+.toc-page {
+  break-before: page;
+  page-break-before: always;
+}
+
+.toc-title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+  text-indent: 0;
+  margin: 0 0 8.5mm 0;
+}
+
+.toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  margin: 0;
+  text-indent: 0;
+}
+
+.toc a {
+  display: flex;
+  align-items: baseline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc-text {
+  flex: 0 1 auto;
+}
+
+.toc-leader {
+  flex: 1 1 auto;
+  border-bottom: 1px dotted currentColor;
+  margin: 0 4pt;
+  transform: translateY(-3pt);
+}
+
+.toc-page-number {
+  flex: 0 0 auto;
+  min-width: 2em;
+  text-align: right;
+}
+
+.toc-level-2 {
+  padding-left: 6.35mm;
+}
+
+
+/* ---------- Título repetido ---------- */
+.body-title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+  text-indent: 0;
+  margin: 0;
+  line-height: 2;
+}
+
+/* ---------- Listas ---------- */
+.doc ul,
+.doc ol {
+  margin: 0 0 0 6.35mm;
+  padding-left: 6.35mm;
+}
+
+.doc li {
+  margin: 0;
+}
+
+.doc li > p {
+  text-indent: 0;
+}
+
+/* ---------- Citas ---------- */
+.doc blockquote {
+  margin: 0 0 0 12.7mm;
+  padding: 0;
+  border: 0;
+  font-style: normal;
+}
+
+.doc blockquote p {
+  text-indent: 0;
+}
+
+/* ---------- Tablas ---------- */
+.doc .table-caption {
+  text-indent: 0;
+  margin: 2mm 0 0 0;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.doc .float-label {
+  display: block;
+  font-weight: 700;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+
+.doc .float-title {
+  display: block;
+  font-style: italic;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Times New Roman", Tinos, "Liberation Serif", serif;
+  font-size: 10.5pt;
+  line-height: 1.25;
+  margin: 2mm 0 0 0;
+  break-inside: auto;
+}
+
+.doc thead {
+  display: table-header-group;
+}
+
+.doc th,
+.doc td {
+  text-align: left;
+  vertical-align: top;
+  padding: 3pt 6pt;
+}
+
+.doc tr {
+  break-inside: avoid;
+}
+
+.doc.tables-apa table {
+  border-top: 1pt solid #000000;
+  border-bottom: 1pt solid #000000;
+}
+
+.doc.tables-apa thead th {
+  border-bottom: 1pt solid #000000;
+  font-weight: 700;
+}
+
+.doc.tables-grid table {
+  border: 0.5pt solid #c9ced6;
+}
+
+.doc.tables-grid th,
+.doc.tables-grid td {
+  border: 0.5pt solid #c9ced6;
+}
+
+.doc.tables-grid thead th {
+  background: #f2f4f7;
+  font-weight: 700;
+}
+
+.doc.tables-zebra tbody tr:nth-child(even) td {
+  background: #f7f8fa;
+}
+
+/* ---------- Figuras ---------- */
+.doc .figure {
+  margin: 2mm 0 0 0;
+  break-inside: avoid;
+}
+
+.doc .figure img {
+  display: block;
+  max-width: 100%;
+  margin: 4pt auto 0 auto;
+}
+
+.doc .float-caption {
+  text-align: left;
+}
+
+/* ---------- Código ---------- */
+.doc pre {
+  font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+  font-size: 9pt;
+  line-height: 1.35;
+  background: #f5f5f5;
+  border: 0.5pt solid #d6d6d6;
+  padding: 6pt 8pt;
+  margin: 6pt 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  break-inside: avoid;
+}
+
+.doc pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.doc :not(pre) > code {
+  font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+  font-size: 0.95em;
+  background: #f5f5f5;
+  padding: 0 2pt;
+}
+
+.doc .katex-display {
+  margin: 6pt 0;
+  break-inside: avoid;
+}
+
+/* ---------- Referencias ---------- */
+.doc .references-section ul,
+.doc .references-section ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.doc .references-section li {
+  padding-left: 12.7mm;
+  text-indent: -12.7mm;
+  margin: 0;
+}
+.doc .references-section p {
+  margin: 0 0 0 12.7mm;
+  text-indent: -12.7mm;
+}
+.doc .references-section li > p {
+  text-indent: inherit;
+  margin: 0;
+}
+
+.doc .references-section {
+  break-before: page; page-break-before: always;
+}
+
+.doc .appendix-section {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* ---------- Marca de agua ---------- */
+
+
+/* ---------- Impresión ---------- */
+@media print {
+  html,
+  body {
+    background: #ffffff;
+    margin: 0;
+  }
+
+  .pagedjs_pages {
+    display: block;
+  }
+
+  .pagedjs_page {
+    margin: 0 !important;
+    box-shadow: none !important;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .pagedjs_page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

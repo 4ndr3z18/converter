@@ -9,9 +9,37 @@ y el versionado usa [Semantic Versioning](https://semver.org/lang/es/).
 ### Por venir
 
 - Persistencia local con SQLite/Drizzle y biblioteca de documentos.
-- Editor de plantillas en la interfaz.
+- Más plantillas por asignatura.
 - Índice automático con números de página reales para plantillas que lo activen.
-- Migración a Supabase.
+- Sincronización opcional con Supabase.
+
+## [0.2.0] — 2026-10-22
+
+### Añadido
+
+- Plantillas HTML/CSS editables con Handlebars: datos, condicionales y bucles.
+- Formato de plantilla como carpeta con `template.json`, `template.html` y `template.css`.
+- Plantilla APA 7 portada a HTML/CSS, con portada, resumen, tabla, figura, referencias y anexos.
+- Store local de plantillas en `.data/templates/`, con plantillas integradas de solo lectura y duplicado.
+- Editor de plantillas con CodeMirror 6, pestañas HTML/CSS/Metadatos, vista previa paginada y guardado.
+- Pantalla de inicio con botón `+`, arrastrar y soltar archivos `.md`, selector de plantilla, workspace de vista previa y descarga.
+- Creación, duplicado, exportación e importación de plantillas en JSON y desde carpetas.
+- Subida de imágenes a `.data/uploads/` y servicio local por `/api/assets/...`.
+- API CRUD de plantillas, exportación, importación y comprobación del estado del servidor.
+- Numeración de páginas configurable por plantilla mediante `data-page-label` y `.pagedjs_page::after`.
+- Validación de campos obligatorios con marcadores visibles y avisos en la interfaz.
+- Verificación del PDF APA con 11 páginas exactas y `MediaBox [0 0 612 792]`.
+- Pruebas del renderizador HTML y del store de plantillas.
+
+### Cambiado
+
+- El render ahora compone Handlebars + HTML/CSS en `lib/render/html-template.ts`.
+- Los trabajos de render guardan una instantánea de la plantilla para mantener la coherencia entre vista previa y PDF.
+- La documentación, la arquitectura y las rutas de API se actualizaron para el nuevo sistema de plantillas.
+
+### Eliminado
+
+- El esquema declarativo anterior, el generador de CSS, los presets y el laboratorio web antiguo.
 
 ## [0.1.0] — 2026-10-22
 
@@ -40,5 +68,6 @@ y el versionado usa [Semantic Versioning](https://semver.org/lang/es/).
 - Las referencias en párrafos usaban sangría de primera línea en lugar de sangría francesa.
 - El resumen y el cuerpo compartían página.
 
-[Unreleased]: https://github.com/4ndr3z18/converter/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/4ndr3z18/converter/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/4ndr3z18/converter/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/4ndr3z18/converter/releases/tag/v0.1.0
