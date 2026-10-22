@@ -6,21 +6,47 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "vendor": "node scripts/copy-vendor.mjs",
+    "predev": "npm run vendor",
+    "prebuild": "npm run vendor",
+    "postinstall": "npm run vendor",
+    "pdf:sample": "tsx scripts/render-sample.ts"
   },
   "dependencies": {
+    "@vscode/markdown-it-katex": "^1.1.2",
+    "highlight.js": "^11.12.0",
+    "js-yaml": "^5.5.0",
+    "katex": "^0.19.0",
+    "markdown-it": "^15.0.3",
+    "markdown-it-anchor": "^10.0.0",
     "next": "16.4.2",
+    "pagedjs": "^0.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@fontsource/arimo": "^5.3.0",
+    "@fontsource/carlito": "^5.3.0",
+    "@fontsource/gelasio": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/tinos": "^5.3.0",
     "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "pdf-parse": "^2.4.5",
+    "playwright": "^1.64.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
   }
 }
