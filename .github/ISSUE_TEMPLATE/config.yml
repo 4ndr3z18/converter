@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación
+    url: https://github.com/4ndr3z18/converter#readme
+    about: Guía de instalación, uso, API y plantillas.

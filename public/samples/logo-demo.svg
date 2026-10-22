@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="120" viewBox="0 0 420 120" role="img" aria-label="Universidad Nacional de Ejemplo">
+  <g fill="none" stroke="#1f3a5f" stroke-width="4">
+    <path d="M38 20h48v38c0 22-24 38-24 38S38 80 38 58z" />
+    <path d="M50 38h24M50 50h24M50 62h16" stroke-width="3" />
+  </g>
+  <text x="62" y="74" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#1f3a5f">UE</text>
+  <text x="104" y="52" font-family="Georgia, 'Times New Roman', serif" font-size="20" letter-spacing="1" fill="#1f3a5f">UNIVERSIDAD NACIONAL</text>
+  <text x="104" y="78" font-family="Georgia, 'Times New Roman', serif" font-size="20" letter-spacing="1" fill="#1f3a5f">DE EJEMPLO</text>
+  <line x1="104" y1="90" x2="392" y2="90" stroke="#1f3a5f" stroke-width="1.5" />
+</svg>

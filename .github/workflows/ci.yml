@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    name: Typecheck, pruebas, build y PDF
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Verificar tipos
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Pruebas unitarias
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Generar y verificar PDF de muestra
+        run: npm run pdf:sample -- --start
+
+      - name: Publicar PDF de muestra
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-muestra-apa7
+          path: artifacts/demo-apa.pdf
+          if-no-files-found: error
+          retention-days: 14
