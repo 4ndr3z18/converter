@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   asText,
-  cssContentFromFormat,
   escapeAttribute,
   escapeHtml,
   formatLongDate,
@@ -60,27 +59,6 @@ describe("formatLongDate / asText", () => {
   it("une listas con coma", () => {
     expect(asText(["uno", "dos", "tres"])).toBe("uno, dos, tres");
     expect(asText(null)).toBe("");
-  });
-});
-
-describe("cssContentFromFormat", () => {
-  it("convierte los contadores de página en funciones CSS", () => {
-    expect(
-      cssContentFromFormat("Página {{page}} de {{pages}}", () => null),
-    ).toBe('"Página " counter(page) " de " counter(pages)');
-  });
-
-  it("resuelve variables del front matter", () => {
-    expect(
-      cssContentFromFormat("{{course.code}} — {{author.name}}", (key) =>
-        key === "course.code" ? "IS-601" : "Pérez",
-      ),
-    ).toBe('"IS-601" " — " "Pérez"');
-  });
-
-  it("devuelve null si no hay contenido", () => {
-    expect(cssContentFromFormat("", () => null)).toBeNull();
-    expect(cssContentFromFormat("{{desconocido}}", () => null)).toBeNull();
   });
 });
 

@@ -1,5 +1,6 @@
 import { formatValidationError, prepareRender, renderRequestSchema } from "@/lib/api/render-request";
 import { renderPdf } from "@/lib/pdf/chromium";
+import { TemplateStoreError } from "@/lib/template/store";
 
 export async function POST(request: Request) {
   let payload: unknown;
@@ -43,9 +44,11 @@ export async function POST(request: Request) {
     return Response.json(
       {
         error:
-          "No se pudo generar el PDF. Revisa que el documento tenga contenido válido.",
+          error instanceof TemplateStoreError
+            ? error.message
+            : "No se pudo generar el PDF. Revisa que el documento tenga contenido válido.",
       },
-      { status: 500 },
+      { status: error instanceof TemplateStoreError ? 400 : 500 },
     );
   }
 }

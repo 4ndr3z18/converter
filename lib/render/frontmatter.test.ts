@@ -1,14 +1,24 @@
 ﻿import { describe, expect, it } from "vitest";
 import {
   applyOverrides,
-  buildFilename,
+  buildFilenameFromPattern,
   getValue,
   parseFrontMatter,
   resolvePattern,
   setValue,
-  validateRequiredFields,
+  validateTemplateFields,
 } from "@/lib/render/frontmatter";
-import { APA7_TEMPLATE } from "@/lib/template/presets/apa7";
+
+const REQUIRED_FIELDS = [
+  { key: "title", label: "Título del informe", required: true },
+  { key: "report_type", label: "Tipo de informe", required: true },
+  { key: "author.name", label: "Apellidos y nombres del alumno", required: true },
+  { key: "author.id", label: "Código de alumno", required: true },
+  { key: "affiliation.university", label: "Universidad", required: true },
+  { key: "course.name", label: "Asignatura", required: true },
+  { key: "professor.name", label: "Docente", required: true },
+  { key: "date", label: "Fecha de entrega", required: true },
+];
 
 const VALID_FRONT_MATTER = `---
 title: "Adopción de IA en equipos universitarios"
@@ -98,17 +108,32 @@ describe("getValue / setValue / applyOverrides", () => {
       title: "Uno",
     });
   });
+
+  it("ignora rutas que intentan modificar prototipos", () => {
+    const result = applyOverrides(
+      { title: "Seguro" },
+      {
+        "__proto__.polluted": true,
+        "constructor.prototype.polluted": true,
+        prototype: { polluted: true },
+        city: "Lima",
+      },
+    );
+
+    expect(result).toEqual({ title: "Seguro", city: "Lima" });
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
 });
 
-describe("validateRequiredFields", () => {
+describe("validateTemplateFields", () => {
   it("no reporta nada cuando están todos los campos obligatorios", () => {
     const { data } = parseFrontMatter(VALID_FRONT_MATTER);
 
-    expect(validateRequiredFields(APA7_TEMPLATE, data)).toEqual([]);
+    expect(validateTemplateFields(REQUIRED_FIELDS, data)).toEqual([]);
   });
 
   it("marca cada campo obligatorio ausente", () => {
-    const issues = validateRequiredFields(APA7_TEMPLATE, {
+    const issues = validateTemplateFields(REQUIRED_FIELDS, {
       title: "Solo el título",
     });
     const fields = issues.map((issue) => issue.field);
@@ -121,7 +146,7 @@ describe("validateRequiredFields", () => {
   });
 });
 
-describe("resolvePattern / buildFilename", () => {
+describe("resolvePattern / buildFilenameFromPattern", () => {
   it("sustituye las variables del patrón", () => {
     expect(
       resolvePattern("{{report_type}} - {{ author.name }}", (key) =>
@@ -133,12 +158,15 @@ describe("resolvePattern / buildFilename", () => {
   it("genera un nombre de archivo seguro y con extensión", () => {
     const { data } = parseFrontMatter(VALID_FRONT_MATTER);
 
-    expect(buildFilename(APA7_TEMPLATE, data)).toBe(
-      "Informe de investigación - Pérez Quispe, Ana Lucía.pdf",
-    );
+    expect(
+      buildFilenameFromPattern(
+        "{{report_type}} - {{author.name}}",
+        data,
+      ),
+    ).toBe("Informe de investigación - Pérez Quispe, Ana Lucía.pdf");
   });
 
   it("usa un nombre de respaldo cuando faltan los datos", () => {
-    expect(buildFilename(APA7_TEMPLATE, {})).toBe("documento.pdf");
+    expect(buildFilenameFromPattern("{{title}}", {})).toBe("documento.pdf");
   });
 });

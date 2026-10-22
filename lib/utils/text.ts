@@ -35,36 +35,6 @@ export function escapeAttribute(input: string): string {
   return escapeHtml(input).replace(/`/g, "&#96;");
 }
 
-/** Convierte "Página {{page}} de {{pages}}" en un valor CSS `content`. */
-export function cssContentFromFormat(
-  format: string,
-  resolve: (token: string) => string | null,
-): string | null {
-  const parts = format.split(/(\{\{\s*[\w.]+\s*\}\})/g).filter((part) => part !== "");
-  const output: string[] = [];
-
-  for (const part of parts) {
-    const match = /^\{\{\s*([\w.]+)\s*\}\}$/.exec(part);
-    if (!match) {
-      output.push(JSON.stringify(part));
-      continue;
-    }
-
-    const token = match[1];
-    if (token === "page") {
-      output.push("counter(page)");
-    } else if (token === "pages") {
-      output.push("counter(pages)");
-    } else {
-      const value = resolve(token) ?? "";
-      if (value !== "") output.push(JSON.stringify(value));
-    }
-  }
-
-  if (output.length === 0) return null;
-  return output.join(" ");
-}
-
 /** Formatea una fecha ISO (o Date de YAML) en español: "22 de octubre de 2026". */
 export function formatLongDate(value: unknown): string {
   if (value instanceof Date && !Number.isNaN(value.getTime())) {

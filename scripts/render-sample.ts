@@ -75,7 +75,7 @@ async function main(): Promise<void> {
     const response = await fetch(`${baseUrl}/api/pdf`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ markdown, template: "apa7-informe" }),
+      body: JSON.stringify({ markdown, template: "apa7" }),
     });
 
     if (!response.ok) {
@@ -84,12 +84,17 @@ async function main(): Promise<void> {
     }
 
     const bytes = new Uint8Array(await response.arrayBuffer());
+    const rawPdf = Buffer.from(bytes).toString("latin1");
+    const mediaBoxes = [
+      ...new Set(rawPdf.match(/\/MediaBox\s*\[[^\]]+\]/g) ?? []),
+    ];
     const outputDir = path.join(process.cwd(), "artifacts");
     await mkdir(outputDir, { recursive: true });
 
     const outputPath = path.join(outputDir, "demo-apa.pdf");
     await writeFile(outputPath, bytes);
 
+    // PDFParse puede transferir el buffer; por eso el MediaBox se lee antes.
     const parser = new PDFParse({ data: bytes });
     const textResult = await parser.getText();
     const info = await parser.getInfo();
@@ -120,19 +125,32 @@ async function main(): Promise<void> {
     console.log(`PDF generado: ${outputPath}`);
     console.log(`Páginas: ${pageCount}`);
     console.log(`Caracteres extraídos: ${text.length}`);
+    console.log(`MediaBox: ${mediaBoxes.join(", ") || "no encontrado"}`);
 
     if (missing.length > 0) {
       console.error(`Faltan textos esperados: ${missing.join(", ")}`);
       process.exitCode = 1;
     }
 
-    if (pageCount < 6) {
-      console.error("El PDF tiene menos páginas de las esperadas.");
+    if (pageCount !== 11) {
+      console.error(
+        `Se esperaban 11 páginas y se obtuvieron ${pageCount}.`,
+      );
+      process.exitCode = 1;
+    }
+
+    if (
+      mediaBoxes.length !== 1 ||
+      !/^\/MediaBox\s*\[0 0 612 792\]$/.test(mediaBoxes[0])
+    ) {
+      console.error(
+        "El PDF no tiene el tamaño Carta exacto (612 × 792 pt) en todas las páginas.",
+      );
       process.exitCode = 1;
     }
 
     if (!process.exitCode) {
-      console.log("Verificación de contenido: OK");
+      console.log("Verificación de contenido, páginas y tamaño: OK");
     }
   } finally {
     if (server) await stopServer(server);

@@ -1,0 +1,101 @@
+{
+  "name": "APA 7 — Informe de investigación",
+  "description": "Formato APA 7 (versión estudiante) en tamaño Carta, con portada institucional, resumen, referencias con sangría francesa y tablas APA.",
+  "fields": [
+    {
+      "key": "title",
+      "label": "Título del informe",
+      "required": true
+    },
+    {
+      "key": "report_type",
+      "label": "Tipo de informe",
+      "required": true
+    },
+    {
+      "key": "author.name",
+      "label": "Apellidos y nombres del alumno",
+      "required": true
+    },
+    {
+      "key": "author.id",
+      "label": "Código de alumno",
+      "required": true
+    },
+    {
+      "key": "affiliation.university",
+      "label": "Universidad",
+      "required": true
+    },
+    {
+      "key": "affiliation.faculty",
+      "label": "Facultad",
+      "required": false
+    },
+    {
+      "key": "affiliation.logo",
+      "label": "Logo institucional (ruta o URL)",
+      "required": false
+    },
+    {
+      "key": "course.name",
+      "label": "Asignatura",
+      "required": true
+    },
+    {
+      "key": "course.code",
+      "label": "Código de asignatura",
+      "required": false
+    },
+    {
+      "key": "professor.name",
+      "label": "Docente",
+      "required": true
+    },
+    {
+      "key": "professor.title",
+      "label": "Grado del docente",
+      "required": false
+    },
+    {
+      "key": "section",
+      "label": "Sección",
+      "required": false
+    },
+    {
+      "key": "cycle",
+      "label": "Ciclo académico",
+      "required": false
+    },
+    {
+      "key": "city",
+      "label": "Ciudad",
+      "required": false
+    },
+    {
+      "key": "date",
+      "label": "Fecha de entrega",
+      "required": true
+    },
+    {
+      "key": "keywords",
+      "label": "Palabras clave",
+      "required": false
+    }
+  ],
+  "sections": {
+    "abstract": ["Resumen", "Abstract"],
+    "references": ["Referencias", "References"],
+    "appendix": ["Anexo", "Apéndice", "Appendix"]
+  },
+  "numbering": {
+    "enabled": true,
+    "format": "{{page}}",
+    "position": "top-right",
+    "skipFirstPage": false,
+    "fontSize": 12,
+    "fontFamily": "\"Times New Roman\", Tinos, \"Liberation Serif\", serif",
+    "color": "#000000"
+  },
+  "filenamePattern": "{{report_type}} - {{author.name}}"
+}

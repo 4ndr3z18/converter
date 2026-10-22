@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Converter — Informes en PDF desde Markdown",
+  title: "Converter — Markdown a PDF con plantillas HTML/CSS",
   description:
-    "Convierte archivos Markdown en informes PDF con plantillas editables. Plantilla APA 7 incluida.",
+    "Creá plantillas HTML/CSS con Handlebars y convertí archivos Markdown en PDF. Incluye la plantilla APA 7 y procesa todo en tu equipo.",
 };
 
 export default function RootLayout({

@@ -1,5 +1,5 @@
 ---
-template: apa7-informe
+template: apa7
 title: "Adopción de herramientas de inteligencia artificial generativa en la gestión de proyectos de software: estudio de caso en equipos universitarios"
 report_type: "Informe de investigación"
 
